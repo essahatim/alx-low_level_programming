@@ -4,9 +4,9 @@
 /**
  * main - determines if a number is positive , negative or zero
  *
- * description: 'determines if a number is positive , negative or zero'
- *
- * return: Always 0.
+ * Return: %0 on success, negative error code otherwise.
+
+ * Return: Always 0.
  */
 int main(void)
 {
@@ -26,7 +26,5 @@ int main(void)
 	{
 	printf("%d is negative\n", n);
 	}
-
-	/* description: 'determines if a number is positive , negative or zero'*/
 	return (0);
 }
