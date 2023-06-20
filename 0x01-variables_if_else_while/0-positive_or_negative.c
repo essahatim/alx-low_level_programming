@@ -4,6 +4,7 @@
 /**
  * main - determines if a number is positive , negative or zero
  *
+ * Description: 'determines if a number is positive , negative or zero'
  * return: Always 0.
  */
 int main(void)
@@ -24,6 +25,5 @@ int main(void)
 	{
 	printf("%d is negative\n", n);
 	}
-	/*return results*/
 	return (0);
 }
