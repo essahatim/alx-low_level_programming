@@ -26,5 +26,7 @@ int main(void)
 	{
 	printf("%d is negative\n", n);
 	}
+
+	/* description: 'determines if a number is positive , negative or zero'*/
 	return (0);
 }
