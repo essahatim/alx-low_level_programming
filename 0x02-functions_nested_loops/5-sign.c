@@ -1,7 +1,7 @@
 #include"main.h"
 
 /**
- * print_sing - Determines if the input number
+ * Print_sing - Determines if the input number
  * greater, iqual or less than zero.
  * @n: The input number as an integer.
  * Return: 1 is greater than zero. 0 is zero.
