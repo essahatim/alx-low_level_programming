@@ -3,8 +3,8 @@
  * puts2 - Prints every other character of a string,
  * starting with the first characte
  * followed by a new line.
- *  @str: The string to be treated
- *  Return: Void
+ * @str: The string to be treated
+ * Return: Void
  */
 void puts2(char *str)
 {
@@ -19,8 +19,7 @@ void puts2(char *str)
 	for (i = 0; i < j; i += 2)
 	{
 	_putchar(str[i]);
-	
-	_putchar('\n');
 	}
+	_putchar('\n');
 }
 
