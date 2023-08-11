@@ -4,7 +4,7 @@
 /**
  * create_buffer - A buffer  for allocates 1024 bytes  .
  * @file: The file buffer is storing chars for.
- * @fd: The file descriptor to be closed.
+ * Return: A ptr to  buffer.
  */
 char *create_buffer(char *file)
 {
@@ -18,6 +18,11 @@ char *create_buffer(char *file)
 	}
 	return (buffer);
 }
+
+/*
+ * close_file - Closes the file descriptor.
+ * @fd: A file descriptor.
+ */
 void close_file(int fd)
 {
 	int Cl;
