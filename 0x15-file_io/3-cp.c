@@ -45,7 +45,7 @@ void close_file(int fd)
  * If file_to cannot be created or written to - exit code 99.
  * If file_to or file_from cannot be closed - exit code 100.
  */
-int main(int ac, char *av[])
+int main(int ac, char **av[])
 {
 	int from_fd, to_fd;
 	int re, wi;
