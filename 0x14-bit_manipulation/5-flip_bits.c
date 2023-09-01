@@ -9,10 +9,10 @@
 unsigned int flip_bits(unsigned long int n, unsigned long int m)
 {
 	int a;
-	unsigned long int current, count = 0;
+	unsigned int current, count = 0;
 	unsigned long int xor_v = n ^ m;
 
-	for (a = sizeof(n) * 8; a >= 0; a--)
+	for (a = 63; a >= 0; a--)
 	{
 		current = xor_v >> a;
 		if (current & 1)
