@@ -5,7 +5,7 @@
  * @text_content: The text to write to the file.
  * Return: 1 (success), 0 (failure).
  */
-int create_file(const char *filename, char *text_content)
+int append_text_to_file(const char *filename, char *text_content)
 {
 	int fd, len = 0;
 	ssize_t w = 0;
