@@ -1,21 +1,21 @@
 #include "main.h"
- /*
+/**
+ * Description:
  * If the argument count is incorrect - exit code 97.
- * If file_from does not exist or cannot be read - exit code 98.
+ * If file_from_fd does not exist or cannot be read - exit code 98.
  * If file_to cannot be created or written to - exit code 99.
- * If file_to or file_from cannot be closed - exit code 100.
+ * If file_to or file_from_fd cannot be closed - exit code 100.
  */
 /**
  * create_buf - Allocates 1024 bytes for a buf.
  * @file: The name of the file buf is storing chars for.
- * Return: The newly-allocated buf.
+ * Return: The newly-allocated buff.
  */
 char *create_buf(char *file)
 {
 	char *buf;
 
 	buf = malloc(sizeof(char) * 1024);
-
 	if (buf == NULL)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file);
@@ -25,9 +25,9 @@ char *create_buf(char *file)
 }
 /**
  * main - Copies the contents of a file to another file.
- * @ac: The num of arguments supplied to the program.
+ * @ac: The num of arguments.
  * @av: An array of pointers to the arguments.
- * Return: 0 on success.
+ * Return: 0 (success).
  */
 int main(int ac, char *av[])
 {
@@ -58,22 +58,26 @@ int main(int ac, char *av[])
 			free(buf);
 			exit(99);
 		}
-		r = read(from_fd, buf, 1024);
+		r = read(from_fd, buffer, 1024);
 		to_fd = open(av[2], O_WRONLY | O_APPEND);
 	} while (r > 0);
+/**
+ * close_file - Closes file.
+ * @fd: The file to be closed.
+ */
+void close_file(int fd)
+{
+	int cl;
+
+	cl = close(fd);
+	if (cl == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
+		exit(100);
+	}
+}
+	free(buf);
 	close_file(from_fd);
 	close_file(to_fd);
-	if (from_fd)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close from_fd %d\n", from_fd);
-		free(buf);
-		exit(100);
-	}
-	if (to_fd)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close to_fd %d\n", to_fd);
-		free(buf);
-		exit(100);
-	}
 	return (0);
 }
