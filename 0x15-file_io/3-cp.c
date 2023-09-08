@@ -2,60 +2,46 @@
 /**
  * Description:
  * If the argument count is incorrect - exit code 97.
- * If file_from_fd does not exist or cannot be read - exit code 98.
+ * If file_from does not exist or cannot be read - exit code 98.
  * If file_to cannot be created or written to - exit code 99.
- * If file_to or file_from_fd cannot be closed - exit code 100.
+ * If file_to or file_from cannot be closed - exit code 100.
  */
-char *create_buf(char *file);
-void close_file(int fd);
 
-/**
+ char *create_buf(char *file);
+ /**
  * create_buf - Allocates 1024 bytes for a buf.
  * @file: The name of the file buf is storing chars for.
- * Return: The newly-allocated buff.
+ * Return: The newly-allocated buf.
  */
-char *create_buffer(char *file)
+char *create_buf(char *file)
 {
 	char *buf;
 
 	buf = malloc(sizeof(char) * 1024);
+
 	if (buf == NULL)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't write to_fd %s\n", file);
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file);
 		exit(99);
 	}
 	return (buf);
 }
-/**
- * close_file - Closes file.
- * @fd: The file to be closed.
- */
-void close_file(int fd)
-{
-	int cl;
 
-	cl = close(fd);
-	if (cl == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
-		exit(100);
-	}
-}
 /**
  * main - Copies the contents of a file to another file.
  * @ac: The num of arguments.
  * @av: An array of pointers to the arguments.
- * Return: 0 on success.
+ * Return: 0 (success).
  */
 int main(int ac, char *av[])
 {
-	int from_fd, to_fd;
+	int from_fd = 0, to_fd = 0;
 	ssize_t r, w;
 	char *buf;
 
 	if (ac != 3)
 	{
-		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
+		dprintf(STDERR_FILENO, "Usage: cp file_from_fd file_to_fd\n");
 		exit(97);
 	}
 	buf = create_buf(av[2]);
@@ -82,5 +68,15 @@ int main(int ac, char *av[])
 	free(buf);
 	close_file(from_fd);
 	close_file(to_fd);
+	if (from_fd)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
+		exit(100);
+	}
+	if (to_fd)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
+		exit(100);
+	}
 	return (0);
 }
