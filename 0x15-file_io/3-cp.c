@@ -1,15 +1,10 @@
 #include "main.h"
-char *create_buf(char *file);
-/**
+
+
+ /**
  * create_buf - Allocates 1024 bytes for a buf.
  * @file: The name of the file.
  * Return: The newly-allocated buf.
- *
- * Description:
- * If the argument count is incorrect - exit code 97.
- * If file_from does not exist or cannot be read - exit code 98.
- * If file_to cannot be created or written to - exit code 99.
- * If file_to or file_from cannot be closed - exit code 100.
  */
 char *create_buf(char *file)
 {
@@ -25,11 +20,16 @@ char *create_buf(char *file)
 	return (buf);
 }
 
- /**
+/**
  * main - Copies the contents of a file to another file.
  * @ac: The num of arguments.
  * @av: An array of pointers to the arguments.
  * Return: 0 (success).
+ *
+ * Description: If the argument count is incorrect - exit code 97.
+ * If file_from does not exist or cannot be read - exit code 98.
+ * If file_to cannot be created or written to - exit code 99.
+ * If file_to or file_from cannot be closed - exit code 100.
  */
 int main(int ac, char *av[])
 {
