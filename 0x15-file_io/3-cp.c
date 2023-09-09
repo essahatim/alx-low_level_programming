@@ -1,4 +1,5 @@
 #include "main.h"
+
 /**
  * Description:
  * If the argument count is incorrect - exit code 97.
@@ -7,10 +8,12 @@
  * If file_to or file_from cannot be closed - exit code 100.
  */
 
- char *create_buf(char *file);
+char *create_buf(char *file);
+void close_file(int fd);
+
  /**
  * create_buf - Allocates 1024 bytes for a buf.
- * @file: The name of the file buf is storing chars for.
+ * @file: The name of the file.
  * Return: The newly-allocated buf.
  */
 char *create_buf(char *file)
@@ -68,15 +71,22 @@ int main(int ac, char *av[])
 	free(buf);
 	close_file(from_fd);
 	close_file(to_fd);
-	if (from_fd)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
-		exit(100);
-	}
-	if (to_fd)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
-		exit(100);
-	}
 	return (0);
+}
+
+/**
+ * close_file - Closes file.
+ * @fd: The file to be closed.
+ */
+void close_file(int fd)
+{
+	int cl;
+
+	cl = close(fd);
+
+	if (cl == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
+		exit(100);
+	}
 }
