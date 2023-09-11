@@ -1,25 +1,4 @@
 #include "main.h"
-
-
- /**
- * create_buf - Allocates 1024 bytes for a buf.
- * @file: The name of the file.
- * Return: The newly-allocated buf.
- */
-char *create_buf(char *file)
-{
-	char *buf;
-
-	buf = malloc(sizeof(char) * 1024);
-
-	if (buf == NULL)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file);
-		exit(99);
-	}
-	return (buf);
-}
-
 /**
  * main - Copies the contents of a file to another file.
  * @ac: The num of arguments.
@@ -31,57 +10,41 @@ char *create_buf(char *file)
  * If file_to cannot be created or written to - exit code 99.
  * If file_to or file_from cannot be closed - exit code 100.
  */
-int main(int ac, char *av[])
+int main(int ac, char **av)
 {
-	int from_fd = 0, to_fd = 0;
-	ssize_t r, w;
-	char *buffer;
+	int from = 0, to = 0;
+	ssize_t r;
+	char *buf;
+
+	buf = malloc(sizeof(char) * 1024);
 
 	if (ac != 3)
-	{
-		dprintf(STDERR_FILENO, "Usage: cp file_from_fd file_to_fd\n");
+		dprintf(STDERR_FILENO, "USAGE : cp file_from file_to\n");
 		exit(97);
-	}
-	buffer = create_buffer(av[2]);
-	from_fd = open(av[1], O_RDONLY);
-	r = read(from_fd, buffer, 1024);
-	to_fd = open(av[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
-	do {
-		if (from_fd == -1 || r == -1)
-		{
-			dprintf(STDERR_FILENO, "Error: Can't read from_fd file %s\n", av[1]);
-			free(buffer);
-			exit(98);
-		}
-		w = write(to_fd, buffer, r);
-		if (to_fd == -1 || w == -1)
-		{
-			dprintf(STDERR_FILENO, "Error: Can't write to_fd %s\n", av[2]);
-			free(buffer);
+
+	from = open(av[1], O_RDONLY);
+	if (from == -1)
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", av[1]);
+		exit(98);
+	to = open(av[2], O_WRONLY | O_CREAT | O_TRUNC, 0664);
+	if (to == -1)
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", av[2]);
+		exit(99);
+	while ((r = read(from, buf, 1024)) > 0)
+		if (write(to, buf, r) != r)
+			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", av[2]);
 			exit(99);
-		}
-		r = read(from_fd, buffer, 1024);
-		to_fd = open(av[2], O_WRONLY | O_APPEND);
-	} while (r > 0);
-	free(buffer);
-	close_file(from_fd);
-	close_file(to_fd);
-	return (0);
-}
+	if (r == 1)
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", av[1]);
+		exit(98);
 
-/**
- * close_file - Closes file.
- * @fd: The file to be closed.
- */
-void close_file(int fd)
-{
-	int cl;
-
-	cl = close(fd);
-
-	if (cl == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
+	from = close(from)
+	to = close(to)
+	if (from)
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", from);
 		exit(100);
-	}
+	if (to)
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", from);
+		exit(100);
+	return (0);
 }
