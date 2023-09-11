@@ -1,9 +1,10 @@
 #include "main.h"
+
 /**
  * main - Copies the contents of a file to another file.
  * @ac: The num of arguments.
  * @av: An array of pointers to the arguments.
- * Return: 0 (success).
+ * Return: 1 (success), 0 (failure).
  *
  * Description: If the argument count is incorrect - exit code 97.
  * If file_from does not exist or cannot be read - exit code 98.
@@ -46,5 +47,5 @@ int main(int ac, char **av)
 	if (to)
 		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", from);
 		exit(100);
-	return (0);
+	return (1);
 }
