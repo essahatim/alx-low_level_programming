@@ -22,7 +22,7 @@ int main(int ac, char **av)
 	if (ac != 3)
 		dprintf(STDERR_FILENO, "USAGE : cp file_from file_to\n");
 		exit(97);
-
+	buf = create_buf(av[2]);
 	from = open(av[1], O_RDONLY);
 	if (from == -1)
 		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", av[1]);
