@@ -1,4 +1,23 @@
 #include "main.h"
+/**
+ * create_buf - Allocates 1024 bytes for a buf.
+ * @file: The name of the file.
+ * Return: The newly-allocated buf.
+ */
+char *create_buf(char *file)
+{
+	char *buf;
+
+	buf = malloc(sizeof(char) * 1024);
+
+	if (buf == NULL)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file);
+		exit(99);
+	}
+
+	return (buf);
+}
 
 /**
  * main - Copies the contents of a file to another file.
@@ -17,28 +36,32 @@ int main(int ac, char **av)
 	ssize_t r;
 	char *buf;
 
-	buf = malloc(sizeof(char) * 1024);
 
 	if (ac != 3)
 		dprintf(STDERR_FILENO, "USAGE : cp file_from file_to\n");
 		exit(97);
+
 	buf = create_buf(av[2]);
 	from = open(av[1], O_RDONLY);
 	if (from == -1)
 		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", av[1]);
+		free(buf);
 		exit(98);
 	to = open(av[2], O_WRONLY | O_CREAT | O_TRUNC, 0664);
 	if (to == -1)
 		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", av[2]);
+		free(buf);
 		exit(99);
 	while ((r = read(from, buf, 1024)) > 0)
 		if (write(to, buf, r) != r)
 			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", av[2]);
+			free(buf);
 			exit(99);
 	if (r == 1)
 		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", av[1]);
+		free(buf);
 		exit(98);
-
+	free(buf);
 	from = close(from)
 	to = close(to)
 	if (from)
