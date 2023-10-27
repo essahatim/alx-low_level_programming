@@ -11,13 +11,13 @@
 unsigned int flip_bits(unsigned long int n, unsigned long int m)
 {
 	int i = 63, count = 0;
-	unsigned long int xor = n ^ m;
+	unsigned long int current, xor = n ^ m;
 
 	for (; i >= 0; i--)
 	{
-		xor = xor >> i;
-		if (xor & 1)
+		if (current & 1UL)
 			count++;
+		current = xor >> i;
 	}
 
 	return (count);
