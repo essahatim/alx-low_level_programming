@@ -15,9 +15,9 @@ unsigned int flip_bits(unsigned long int n, unsigned long int m)
 
 	for (; i >= 0; i--)
 	{
+		current = xor >> i;
 		if (current & 1UL)
 			count++;
-		current = xor >> i;
 	}
 
 	return (count);
