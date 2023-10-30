@@ -8,6 +8,11 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+#define USAGE "Usage: cp file_from file_to\n"
+#define ER_NORD "Error: Can't read from file %s\n"
+#define ER_NOWR "Error: Can't write to %s\n"
+#define ER_NOCL "Error: Can't close fd %s\n"
+#define PERMISSION (S_IRUSR | S_IRGRP | S_IROTH | S_IWGRP | S_IWUSR)
 
 
 ssize_t read_textfile(const char *filename, size_t letters);
