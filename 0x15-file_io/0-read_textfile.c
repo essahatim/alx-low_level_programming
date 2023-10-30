@@ -1,7 +1,7 @@
 #include"main.h"
 
 /**
- * ssize_t read_textfile - Reads a text file and prints
+ * read_textfile - Reads a text file and prints
  * it to the POSIX standard output.
  * @filename: The file readed.
  * @letters: The bytes reded.
@@ -10,8 +10,7 @@
  */
 ssize_t read_textfile(const char *filename, size_t letters)
 {
-	int fd;
-	ssize_t w, r;
+	ssize_t fd, w, r;
 	char buf[1024 * 8];
 
 	if (!filename || !letters)
