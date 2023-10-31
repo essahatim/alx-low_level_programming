@@ -43,5 +43,5 @@ int main(int ac, char **av)
 		dprintf(STDERR_FILENO, ER_NORD, av[1]), exit(98);
 	close_file(from);
 	close_file(to);
-	return (1);
+	return (0);
 }
