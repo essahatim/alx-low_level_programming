@@ -10,7 +10,7 @@ void close_file(int fd)
 	cl = close(fd);
 	if (cl == -1)
 	{
-		dprintf(STDERR_FILENO, from, ER_CL);
+		dprintf(STDERR_FILENO, ER_NOCL, fd );
 		exit(100);
 	}
 }
@@ -30,17 +30,17 @@ int main(int ac, char **av)
 		dprintf(STDERR_FILENO, USAGE), exit(97);
 	from = open(av[1], O_RDONLY);
 	if (from == -1)
-		dprintf(STDERR_FILENO, ER_NORD, av[1]), exite(98);
-	to = open(av[2], O_CREAT | O_WRONLY | O_TRUNC, PERMISSIONS);
+		dprintf(STDERR_FILENO, ER_NORD, av[1]), exit(98);
+	to = open(av[2], O_CREAT | O_WRONLY | O_TRUNC, PERMISSION);
 	if (to == -1)
-		dprintf(STDER_FILENO, av[2], ER_NOWR), exit(99);
+		dprintf(STDERR_FILENO, av[2], ER_NOWR), exit(99);
 	r = read(from, buf, 1024);
 	w = write(to, buf, r);
 	while (r > 0)
 		if (w != r)
 			dprintf(STDERR_FILENO, av[2], ER_NOWR), exit(99);
 	if (r == -1)
-		dprintf(STDERR_FILENO, AV[1], ER_NORD), exit(98);
+		dprintf(STDERR_FILENO, av[1], ER_NORD), exit(98);
 	close_file(from);
 	close_file(to);
 	return (1);
