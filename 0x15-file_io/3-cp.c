@@ -38,7 +38,7 @@ int main(int ac, char **av)
 			dprintf(STDERR_FILENO, ER_NORD, av[1]), exit(98);
 
 		w = write(to, buf, r);
-		if (to == -1 || w == -1)
+		if (to == -1 || w == -1 || w != r)
 			dprintf(STDERR_FILENO, ER_NOWR, av[2]), exit(99);
 		r = read(from, buf, 1024);
 		to = open(av[2], O_WRONLY | O_APPEND);
