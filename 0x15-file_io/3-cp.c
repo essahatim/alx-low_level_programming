@@ -10,7 +10,7 @@ void close_file(int fd)
 	cl = close(fd);
 	if (cl == -1)
 	{
-		dprintf(STDERR_FILENO, ER_NOCL, fd );
+		dprintf(STDERR_FILENO, ER_NOCL, fd);
 		exit(100);
 	}
 }
