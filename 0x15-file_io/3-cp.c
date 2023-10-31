@@ -31,7 +31,7 @@ int main(int ac, char **av)
 	from = open(av[1], O_RDONLY);
 	if (from == -1)
 		dprintf(STDERR_FILENO, ER_NORD, av[1]), exit(98);
-	to = open(av[2], O_CREAT | O_WRONLY | O_TRUNC, PERMISSION);
+	to = open(av[2], O_WRONLY | O_CREAT | O_TRUNC, PERMISSION);
 	if (to == -1)
 		dprintf(STDERR_FILENO, ER_NOWR, av[2]), exit(99);
 	r = read(from, buf, 1024);
