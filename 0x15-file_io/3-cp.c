@@ -42,7 +42,7 @@ int main(int ac, char **av)
 			dprintf(STDERR_FILENO, ER_NOWR, av[2]), exit(99);
 		r = read(from, buf, 1024);
 		to = open(av[2], O_WRONLY | O_APPEND);
-	} while (r > 0)
+	} while (r > 0);
 
 	close_file(from);
 	close_file(to);
