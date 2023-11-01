@@ -32,7 +32,7 @@ int main(int ac, char **av)
 	from = open(av[1], O_RDONLY);
 	to = open(av[2],  O_WRONLY | O_CREAT | O_TRUNC, PERMISSION);
 	r = read(from, buf, 1024);
-	while (r > 0)
+	do
 	{
 		if (from == -1 || r == -1)
 			dprintf(STDERR_FILENO, ER_NORD, av[1]), exit(98);
@@ -42,7 +42,7 @@ int main(int ac, char **av)
 			dprintf(STDERR_FILENO, ER_NOWR, av[2]), exit(99);
 		r = read(from, buf, 1024);
 		to = open(av[2], O_WRONLY | O_APPEND);
-	}
+	} while (r > 0)
 
 	close_file(from);
 	close_file(to);
