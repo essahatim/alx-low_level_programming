@@ -1,19 +1,5 @@
 #include "main.h"
-/**
- * close_file - Closes the file.
- * @fd: the file to be closed.
- */
-void close_file(int fd)
-{
-	int cl;
 
-	cl = close(fd);
-	if (cl == -1)
-	{
-		dprintf(STDERR_FILENO, ER_NOCL, fd);
-		exit(100);
-	}
-}
 /**
  * main - Function program.
  * @ac: The argument of count.
@@ -43,8 +29,11 @@ int main(int ac, char **av)
 		r = read(from, buf, 1024);
 		to = open(av[2], O_WRONLY | O_APPEND);
 	} while (r > 0);
-
-	close_file(from);
-	close_file(to);
+	from = close(from);
+	to = close(to);
+	if (from)
+		dprintf(STDERR_FILENO, ER_NOCL, from), exit(100);
+	if (to)
+		dprintf(STDERR_FILENO, ER_NOCL, from), exit(100);	
 	return (1);
 }
