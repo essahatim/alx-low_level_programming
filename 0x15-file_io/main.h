@@ -12,7 +12,7 @@
 #define ER_NORD "Error: Can't read from file %s\n"
 #define ER_NOWR "Error: Can't write to %s\n"
 #define ER_NOCL "Error: Can't close fd %d\n"
-#define PERMISSION (S_IRUSR | S_IRGRP | S_IROTH | S_IWGRP | S_IWUSR)
+#define PERMISSION (S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH)
 
 
 ssize_t read_textfile(const char *filename, size_t letters);

@@ -18,11 +18,11 @@ int main(int ac, char **av)
 	from = open(av[1], O_RDONLY);
 	to = open(av[2],  O_WRONLY | O_CREAT | O_TRUNC, PERMISSION);
 	r = read(from, buf, 1024);
+
+	if (from == -1 || r == -1)
+		dprintf(STDERR_FILENO, ER_NORD, av[1]), exit(98);
 	do
 	{
-		if (from == -1 || r == -1)
-			dprintf(STDERR_FILENO, ER_NORD, av[1]), exit(98);
-
 		w = write(to, buf, r);
 		if (to == -1 || w == -1 || w != r)
 			dprintf(STDERR_FILENO, ER_NOWR, av[2]), exit(99);
