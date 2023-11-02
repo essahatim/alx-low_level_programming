@@ -24,14 +24,15 @@ void close_file(int fd)
 int main(int ac, char **av)
 {
 	char buf[1024];
-	ssize_t from, to, w, r;
+	int from, to;
+	ssize_t w, r;
 
 	if (ac != 3)
 		dprintf(STDERR_FILENO, USAGE), exit(97);
 	from = open(av[1], O_RDONLY);
 	if (from == -1)
 		dprintf(STDERR_FILENO, ER_NORD, av[1]), exit(98);
-	to = open(av[2], O_WRONLY | O_CREAT | O_TRUNC, PERMISSION);
+	to = open(av[2], O_WRONLY | O_CREAT | O_TRUNC, 0664);
 	if (to == -1)
 		dprintf(STDERR_FILENO, ER_NOWR, av[2]), exit(99);
 	r = read(from, buf, 1024);
