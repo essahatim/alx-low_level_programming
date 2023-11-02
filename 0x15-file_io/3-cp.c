@@ -9,10 +9,7 @@ void close_file(int fd)
 
 	cl = close(fd);
 	if (cl == -1)
-	{
-		dprintf(STDERR_FILENO, ER_NOCL, fd);
-		exit(100);
-	}
+		dprintf(STDERR_FILENO, ER_NOCL, fd), exit(100);
 }
 /**
  * main - Function program.
@@ -44,5 +41,5 @@ int main(int ac, char **av)
 		dprintf(STDERR_FILENO, ER_NORD, av[1]), exit(98);
 	close_file(from);
 	close_file(to);
-	return (1);
+	return (EXIT_SUCCESS);
 }
