@@ -27,14 +27,14 @@ int main(int ac, char **av)
 	if (ac != 3)
 		dprintf(STDERR_FILENO, USAGE), exit(97);
 	from = open(av[1], O_RDONLY);
-	r = read(from, buf, 1024);
-	while (r > 0)
 	if (from == -1)
 		dprintf(STDERR_FILENO, ER_NORD, av[1]), exit(98);
 	to = open(av[2], O_WRONLY | O_CREAT | O_TRUNC, 0664);
 	if (to == -1)
 		dprintf(STDERR_FILENO, ER_NOWR, av[2]), exit(99);
+	r = read(from, buf, 1024);
 	w = write(to, buf, r);
+	while ((r = read(from, buf, 1024)) > 0)
 		if (w != r)
 			dprintf(STDERR_FILENO, ER_NOWR, av[2]), exit(99);
 	if (r == -1)
