@@ -22,7 +22,7 @@ int main(int ac, char **av)
 {
 	char buf[1024];
 	int from, to;
-	ssize_t r;
+	ssize_t r, w;
 
 	if (ac != 3)
 		dprintf(STDERR_FILENO, USAGE), exit(97);
