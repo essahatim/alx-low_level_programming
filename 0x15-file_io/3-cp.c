@@ -22,7 +22,7 @@ int main(int ac, char **av)
 {
 	char buf[1024];
 	int from, to;
-	ssize_t w, r;
+	ssize_t r;
 
 	if (ac != 3)
 		dprintf(STDERR_FILENO, USAGE), exit(97);
@@ -33,9 +33,8 @@ int main(int ac, char **av)
 	if (to == -1)
 		dprintf(STDERR_FILENO, ER_NOWR, av[2]), exit(99);
 	r = read(from, buf, 1024);
-	w = write(to, buf, r);
 	while ((r = read(from, buf, 1024)) > 0)
-		if (w != r)
+		if (write(to, buf, r) != r)
 			dprintf(STDERR_FILENO, ER_NOWR, av[2]), exit(99);
 	if (r == -1)
 		dprintf(STDERR_FILENO, ER_NORD, av[1]), exit(98);
