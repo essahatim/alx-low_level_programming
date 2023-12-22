@@ -3,22 +3,23 @@
 * create_hash_node - Create a new node and add it to the liste.
 * @key: The kye of the node.
 * @value: The value of the node.
-
+*
 * Return: The new_node, or Null.
 */
-hash_node_t create_hash_node(const char *key, const char *value)
+hash_node_t *create_hash_node(const char *key, const char *value)
 {
 	hash_node_t *new_node;
-	
+
 	new_node = malloc(sizeof(hash_node_t));
 	if (new_node == NULL)
-        return (0);
-
+	{
+		return (NULL);
+	}
 	new_node->key = strdup(key);
 	if (new_node->key == NULL)
 	{
 		free(new_node);
-		return (0);
+		return (NULL);
 	}
 
 	new_node->value = strdup(value);
@@ -45,7 +46,8 @@ int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 	unsigned long int index;
 	hash_node_t *new_node, *current;
 
-	if (ht == NULL || key == NULL || *key == '\0')
+	if (ht == NULL || key == NULL || strlen(key) == 0 ||
+		ht->array == NULL)
 		return (0);
 	index = key_index((const unsigned char *)key, ht->size);
 	current = ht->array[index];
