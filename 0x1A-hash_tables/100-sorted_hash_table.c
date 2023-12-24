@@ -135,7 +135,7 @@ int shash_table_set(shash_table_t *ht, const char *key, const char *value)
 		return (0);
 	s_new_node->next = ht->array[index];
 	ht->array[index] = s_new_node;
-	insert_sorted_node(ht, s_new_node)
+	add_sorted_node(ht, key, s_new_node);
 	return (1);
 }
 
