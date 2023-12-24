@@ -63,6 +63,43 @@ shash_node_t *create_shash_node(const char *key, const char *value)
 }
 
 /**
+ * add_sorted_node - Inserts a s new node .
+ * @ht: The shash table.
+ * @key: The key for the new node.
+ * @s_node: The new node to insert.
+ */
+void add_sorted_node(shash_table_t *ht, const char *key, shash_node_t *s_node)
+{
+	shash_node_t *current;
+
+	if (ht == NULL || s_node == NULL)
+		return;
+	if (ht->shead == NULL || strcmp(key, ht->shead->key) < 0)
+	{
+		s_node->snext = ht->shead;
+		s_node->sprev = NULL;
+		if (ht->shead != NULL)
+			ht->shead->sprev = s_node;
+		ht->shead = s_node;
+		if (ht->stail == NULL)
+			ht->stail = s_node;
+	}
+	else
+	{
+		current = ht->shead;
+		while (current->snext != NULL && strcmp(key, current->snext->key) > 0)
+			current = current->snext;
+		s_node->snext = current->snext;
+		s_node->sprev = current;
+		if (current->snext != NULL)
+			current->snext->sprev = s_node;
+		current->snext = s_node;
+		if (s_node->snext == NULL)
+			ht->stail = s_node;
+	}
+}
+
+/**
  * shash_table_set - Adds an element to the hash table.
  * @ht: The hash table to add the key/value.
  * @key: The key of data.
@@ -98,31 +135,8 @@ int shash_table_set(shash_table_t *ht, const char *key, const char *value)
 		return (0);
 	s_new_node->next = ht->array[index];
 	ht->array[index] = s_new_node;
-	if (ht->shead == NULL || strcmp(key, ht->shead->key) < 0)
-	{
-		s_new_node->snext = ht->shead;
-		s_new_node->sprev = NULL;
-	if (ht->shead != NULL)
-		ht->shead->sprev = s_new_node;
-	ht->shead = s_new_node;
-	if (ht->stail == NULL)
-		ht->stail = s_new_node;
-	}
-	else
-	{
-		current = ht->shead;
-		while (current->snext != NULL && strcmp(key, current->snext->key) > 0)
-			current = current->snext;
-
-		s_new_node->snext = current->snext;
-		s_new_node->sprev = current;
-		if (current->snext != NULL)
-			current->snext->sprev = s_new_node;
-		current->snext = s_new_node;
-		if (s_new_node->snext == NULL)
-			ht->stail = s_new_node;
-	}
-		return (1);
+	insert_sorted_node(ht, s_new_node)
+	return (1);
 }
 
 /**
