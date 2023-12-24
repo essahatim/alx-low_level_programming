@@ -38,28 +38,28 @@ shash_table_t *shash_table_create(unsigned long int size)
 *
 * Return: The shn, or Null.
 */
-hash_node_t *create_shash_node(const char *key, const char *value)
+shash_node_t *create_shash_node(const char *key, const char *value)
 {
-	shash_node_t *shn;
+	shash_node_t *s_new_node;
 
-	shn = malloc(sizeof(shash_node_t));
-	if (shn == NULL)
+	s_new_node = malloc(sizeof(shash_node_t));
+	if (s_new_node == NULL)
 		return (NULL);
-	shn->key = strdup(key);
-	if (shn->key == NULL)
+	s_new_node->key = strdup(key);
+	if (s_new_node->key == NULL)
 	{
-		free(shn);
+		free(s_new_node);
 		return (NULL);
 	}
-	shn->value = strdup(value);
-	if (shn->value == NULL)
+	s_new_node->value = strdup(value);
+	if (s_new_node->value == NULL)
 	{
-		free(shn->key);
-		free(shn);
+		free(s_new_node->key);
+		free(s_new_node);
 		return (NULL);
 	}
-	shn->next = shn->snext = shn->sprev = NULL;
-	return (shn);
+	s_new_node->next = s_new_node->snext = s_new_node->sprev = NULL;
+	return (s_new_node);
 }
 
 /**
@@ -74,7 +74,7 @@ hash_node_t *create_shash_node(const char *key, const char *value)
 int shash_table_set(shash_table_t *ht, const char *key, const char *value)
 {
 	unsigned long int index;
-	hash_node_t *s_s_new_node, *current;
+	shash_node_t *s_new_node, *current;
 
 	if (ht == NULL || key == NULL || strlen(key) == 0 ||
 		ht->array == NULL)
@@ -93,11 +93,11 @@ int shash_table_set(shash_table_t *ht, const char *key, const char *value)
 		}
 		current = current->next;
 	}
-	s_s_new_node = create_shash_node(key, value);
-	if (s_s_new_node == NULL)
+	s_new_node = create_shash_node(key, value);
+	if (s_new_node == NULL)
 		return (0);
-	s_s_new_node->next = ht->array[index];
-	ht->array[index] = s_s_new_node;
+	s_new_node->next = ht->array[index];
+	ht->array[index] = s_new_node;
 	if (ht->shead == NULL || strcmp(key, ht->shead->key) < 0)
 	{
 		s_new_node->snext = ht->shead;
@@ -179,10 +179,10 @@ void shash_table_print(const shash_table_t *ht)
 }
 
 /**
- * shash_table_print - Prints a s hash table in reverse.
+ * shash_table_print_rev - Prints a s hash table in reverse.
  * @ht: The hash table to print.
  */
-void shash_table_print(const shash_table_t *ht)
+void shash_table_print_rev(const shash_table_t *ht)
 {
 	char printed = 0;
 	shash_node_t *current;
