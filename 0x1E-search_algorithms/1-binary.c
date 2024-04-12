@@ -7,11 +7,14 @@
  */
 void print_array(int *array, size_t size)
 {
+	size_t i;
+
 	if (array == NULL || size == 0)
 		return;
 
 	printf("Searching in array: ");
-	for (size_t i = 0; i < size; i++)
+
+	for (i = 0; i < size; i++)
 	{
 		printf("%d", array[i]);
 		if (i < size - 1)
@@ -31,20 +34,27 @@ void print_array(int *array, size_t size)
  */
 int recursive_search(int *array, size_t size, int value)
 {
-	size_t i, mid = size / 2;
+	size_t mid = size / 2;
+	int result;
 
 	if (array == NULL || size == 0)
-		return (-1);
+		return (-1); 
 	print_array(array, size);
+
 	if (size % 2 == 0 && mid > 0)
 		mid--;
+
 	if (value == array[mid])
 		return ((int)mid);
+
 	if (value < array[mid])
 		return (recursive_search(array, mid, value));
-	int result = recursive_search(array + mid + 1, size - mid - 1, value);
+
+	result = recursive_search(array + mid + 1, size - mid - 1, value);
+
 	if (result == -1)
 		return (-1);
+
 	return (result + mid + 1);
 }
 
@@ -62,5 +72,6 @@ int binary_search(int *array, size_t size, int value)
 
 	if (index >= 0 && array[index] != value)
 		return (-1);
+
 	return (index);
 }
