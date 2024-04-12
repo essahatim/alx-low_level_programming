@@ -38,7 +38,7 @@ int recursive_search(int *array, size_t size, int value)
 	int result;
 
 	if (array == NULL || size == 0)
-		return (-1); 
+		return (-1);
 	print_array(array, size);
 
 	if (size % 2 == 0 && mid > 0)
